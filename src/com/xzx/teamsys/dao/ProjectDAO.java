@@ -8,7 +8,7 @@ public interface ProjectDAO
 {
 	public int save(Project project);
 	public int update(Project project);
-	public int deleteProject(int id);
+	public int delete(int id);
 	public Project getProjectById(int id);
 	public List<Project> getProjectsByOwner(int owner);
 }

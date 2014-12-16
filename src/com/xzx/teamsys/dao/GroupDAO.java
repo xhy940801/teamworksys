@@ -8,9 +8,10 @@ public interface GroupDAO
 {
 	public int save(Group group);
 	public int update(Group group);
+	public int delete(int id);
 	public int putUserInGroup(int userId, int groupId);
 	public Group getGroupById(int id);
-	public Group getGroupByUserIdAndProjectId();
+	public Group getGroupByUserIdAndProjectId(int userId, int projectId);
 	public List<Group> getGroupsByProjectId(int projectId);
 	public List<Group> getGroupsByUserId(int projectId);
 }

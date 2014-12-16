@@ -42,7 +42,7 @@ public interface UserDAO
 	 * @param status 接受状态
 	 * @return 所有用户
 	 */
-	public List<User> getContributorByProjectId(int id, ContributorStatus status);
+	public List<User> getContributorByProjectId(int projectId, ContributorStatus status);
 	
 	/**
 	 * 通过projectId来获取参与project的所有用户
@@ -50,5 +50,5 @@ public interface UserDAO
 	 * @param statuses 接受状态
 	 * @return 所有用户
 	 */
-	public List<User> getContributorByProjectId(int id, EnumSet<ContributorStatus> statuses);
+	public List<User> getContributorByProjectId(int projectId, EnumSet<ContributorStatus> statuses);
 }
