@@ -10,6 +10,19 @@ public class Group
 	private String remark;
 	private Editable editable;
 	
+	public Group()
+	{
+		
+	}
+	
+	public Group(int projectId, String name, String remark, Editable editable)
+	{
+		this.projectId = projectId;
+		this.name = name;
+		this.remark = remark;
+		this.editable = editable;
+	}
+	
 	public int getId()
 	{
 		return id;

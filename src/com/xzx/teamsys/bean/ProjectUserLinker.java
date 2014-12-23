@@ -9,6 +9,18 @@ public class ProjectUserLinker
 	private int projectId;
 	private ContributorStatus status;
 	
+	public ProjectUserLinker()
+	{
+		
+	}
+	
+	public ProjectUserLinker(int userId, int projectId, ContributorStatus status)
+	{
+		this.userId = userId;
+		this.projectId = projectId;
+		this.status = status;
+	}
+	
 	public int getId()
 	{
 		return id;
@@ -39,12 +51,12 @@ public class ProjectUserLinker
 		this.projectId = projectId;
 	}
 	
-	public ContributorStatus getCondition()
+	public ContributorStatus getStatus()
 	{
 		return status;
 	}
 	
-	public void setCondition(ContributorStatus status)
+	public void setStatus(ContributorStatus status)
 	{
 		this.status = status;
 	}

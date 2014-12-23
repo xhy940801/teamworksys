@@ -6,6 +6,20 @@ public class Project
 	private int owner;
 	private String name;
 	private String remark;
+	private int defaultGroupId;
+	
+	public Project()
+	{
+		
+	}
+	
+	public Project(int owner, String name, String remark, int defaultGroupId)
+	{
+		this.owner = owner;
+		this.name = name;
+		this.remark = remark;
+		this.defaultGroupId = defaultGroupId;
+	}
 	
 	public int getId()
 	{
@@ -45,6 +59,16 @@ public class Project
 	public void setRemark(String remark)
 	{
 		this.remark = remark;
+	}
+
+	public int getDefaultGroupId()
+	{
+		return defaultGroupId;
+	}
+
+	public void setDefaultGroupId(int defaultGroupId)
+	{
+		this.defaultGroupId = defaultGroupId;
 	}
 	
 }

@@ -10,7 +10,7 @@ public interface TaskDAO
 {
 	public int save(Task task);
 	public int update(Task task);
-	public Task getTaskById(int id);
+	public Task getTaskById(int taskId);
 	public List<Task> getTasksByProjectId(int projectId, CompletionStatus status);
 	public List<Task> getTasksByProjectId(int projectId, EnumSet<CompletionStatus> statuses);
 	public List<Task> getTasksByUserId(int userId, CompletionStatus status);

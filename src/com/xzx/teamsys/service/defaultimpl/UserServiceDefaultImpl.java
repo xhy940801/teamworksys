@@ -11,9 +11,8 @@ import com.xzx.teamsys.entity.UserInfo;
 import com.xzx.teamsys.service.UserService;
 import com.xzx.teamsys.util.MD5Util;
 
-public class UserServiceDefaultImpl implements UserService
+public class UserServiceDefaultImpl extends WebServiceDefaultImpl implements UserService
 {
-	private String lastError = "";
 	private TransactionManager transactionManager;
 	private UserDAO userDAO;
 	private UserDetailDAO userDetailDAO;
@@ -139,12 +138,6 @@ public class UserServiceDefaultImpl implements UserService
 			lastError = "数据库操作失败";
 			return null;
 		}
-	}
-
-	@Override
-	public String getLastError()
-	{
-		return lastError;
 	}
 
 	public void setUserDAO(UserDAO userDAO)

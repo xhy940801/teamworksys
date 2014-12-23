@@ -1,6 +1,5 @@
 package com.xzx.teamsys.dao.jdbcimpl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +12,8 @@ import com.xzx.teamsys.bean.User;
 import com.xzx.teamsys.dao.DAOException;
 import com.xzx.teamsys.dao.UserDAO;
 import com.xzx.teamsys.entity.ContributorStatus;
-import com.xzx.teamsys.util.StatementFactory;
 
-public class UserDAOJDBCImpl implements UserDAO
+public class UserDAOJDBCImpl extends JDBCBaseDAO implements UserDAO
 {
 
 	@Override
@@ -75,7 +73,8 @@ public class UserDAOJDBCImpl implements UserDAO
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
 				return user;
-			} else
+			}
+			else
 				return null;
 		}
 		catch (SQLException e)
@@ -100,7 +99,8 @@ public class UserDAOJDBCImpl implements UserDAO
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("password"));
 				return user;
-			} else
+			}
+			else
 				return null;
 		}
 		catch (SQLException e)
@@ -110,7 +110,8 @@ public class UserDAOJDBCImpl implements UserDAO
 	}
 
 	@Override
-	public List<User> getContributorByProjectId(int projectId, ContributorStatus status)
+	public List<User> getContributorByProjectId(int projectId,
+			ContributorStatus status)
 	{
 		return this.getContributorByProjectId(projectId, EnumSet.of(status));
 	}
@@ -125,13 +126,13 @@ public class UserDAOJDBCImpl implements UserDAO
 		{
 			statement.setInt(1, projectId);
 			int i = 2;
-			for(ContributorStatus status : statuses)
+			for (ContributorStatus status : statuses)
 				statement.setString(i++, status.toString());
-			while(i < 5)
+			while (i < 5)
 				statement.setNull(i++, Types.VARCHAR);
 			ResultSet rs = statement.executeQuery();
 			List<User> users = new ArrayList<User>();
-			while(rs.next())
+			while (rs.next())
 			{
 				User user = new User();
 				user.setId(rs.getInt("id"));
@@ -147,49 +148,42 @@ public class UserDAOJDBCImpl implements UserDAO
 		}
 	}
 
-	private PreparedStatement preparedStatement(String sql)
+	@Override
+	public List<User> getContributorByGroupId(int groupId,
+			ContributorStatus status)
 	{
-		Connection conn;
-		PreparedStatement statement;
-		try
-		{
-			conn = StatementFactory.getConnection();
-		}
-		catch (SQLException e)
-		{
-			throw new DAOException("get connection error", e);
-		}
-		try
-		{
-			statement = conn.prepareStatement(sql);
-		}
-		catch (SQLException e)
-		{
-			throw new DAOException("create statement error", e);
-		}
-		return statement;
+		return this.getContributorByGroupId(groupId, EnumSet.of(status));
 	}
 
-	private PreparedStatement preparedStatement(String sql, String[] columnNames)
+	@Override
+	public List<User> getContributorByGroupId(int groupId,
+			EnumSet<ContributorStatus> statuses)
 	{
-		Connection conn;
-		PreparedStatement statement;
+		String sql = "SELECT users.id users.email, users.password FROM groups_users LEFT JOIN users ON groups_users.user_id = users.id WHERE groups_users.group_id=? AND status IN (?,?,?)";
+		PreparedStatement statement = this.preparedStatement(sql);
 		try
 		{
-			conn = StatementFactory.getConnection();
+			statement.setInt(1, groupId);
+			int i = 2;
+			for (ContributorStatus status : statuses)
+				statement.setString(i++, status.toString());
+			while (i < 5)
+				statement.setNull(i++, Types.VARCHAR);
+			ResultSet rs = statement.executeQuery();
+			List<User> users = new ArrayList<User>();
+			while (rs.next())
+			{
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				users.add(user);
+			}
+			return users;
 		}
 		catch (SQLException e)
 		{
-			throw new DAOException("get connection error", e);
+			throw new DAOException("excute sql exception", e);
 		}
-		try
-		{
-			statement = conn.prepareStatement(sql, columnNames);
-		}
-		catch (SQLException e)
-		{
-			throw new DAOException("create statement error", e);
-		}
-		return statement;
 	}
 }

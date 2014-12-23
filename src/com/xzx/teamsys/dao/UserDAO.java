@@ -51,4 +51,20 @@ public interface UserDAO
 	 * @return 所有用户
 	 */
 	public List<User> getContributorByProjectId(int projectId, EnumSet<ContributorStatus> statuses);
+	
+	/**
+	 * 通过groupId获取组
+	 * @param groupId 组的id
+	 * @param status 状态
+	 * @return 用户
+	 */
+	public List<User> getContributorByGroupId(int groupId, ContributorStatus status);
+	
+	/**
+	 * 通过groupId获取组
+	 * @param groupId 组的id
+	 * @param statuses 状态
+	 * @return
+	 */
+	public List<User> getContributorByGroupId(int groupId, EnumSet<ContributorStatus> statuses);
 }

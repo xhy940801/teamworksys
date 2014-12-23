@@ -29,9 +29,12 @@ public class UserProjectInfo
 		this.projectRemark = project.getRemark();
 		this.userId = userId;
 		this.status = status;
-		this.groupId = group.getId();
-		this.groupName = group.getName();
-		this.groupRemark = group.getRemark();
+		if(group != null)
+		{
+			this.groupId = group.getId();
+			this.groupName = group.getName();
+			this.groupRemark = group.getRemark();
+		}
 	}
 	
 	public UserProjectInfo(User user, Project project, Group group, ContributorStatus status)

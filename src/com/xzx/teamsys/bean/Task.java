@@ -14,6 +14,23 @@ public class Task
 	private java.sql.Date deadline;
 	private String debriefing;
 	
+	public Task()
+	{
+		
+	}
+	
+	public Task(int userId, int projectId, String name, String remark, CompletionStatus status, java.util.Date created, java.util.Date deadline, String debriefing)
+	{
+		this.userId = userId;
+		this.projectId = projectId;
+		this.name = name;
+		this.remark = remark;
+		this.status = status;
+		this.created = new java.sql.Date(created.getTime());
+		this.deadline = new java.sql.Date(deadline.getTime());
+		this.debriefing = debriefing;
+	}
+	
 	public int getId()
 	{
 		return id;
