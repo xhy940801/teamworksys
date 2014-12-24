@@ -16,6 +16,11 @@ public class TaskServiceDefaultImpl extends WebServiceDefaultImpl implements
 		TaskService
 {
 	private TaskDAO taskDAO;
+	
+	public TaskServiceDefaultImpl(TaskDAO taskDAO)
+	{
+		this.taskDAO = taskDAO;
+	}
 
 	@Override
 	public int createTask(int projectId, int userId, String name,

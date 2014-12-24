@@ -18,8 +18,7 @@ public class GroupDAOJDBCImpl extends JDBCBaseDAO implements GroupDAO
 	public int save(Group group)
 	{
 		String sql = "INSERT INTO groups (project_id, name, remark, editable) VALUES(?,?,?,?)";
-		String[] columnNames = { "id" };
-		PreparedStatement statement = this.preparedStatement(sql, columnNames);
+		PreparedStatement statement = this.preparedStatementForCreate(sql);
 		try
 		{
 			statement.setInt(1, group.getProjectId());
@@ -79,8 +78,7 @@ public class GroupDAOJDBCImpl extends JDBCBaseDAO implements GroupDAO
 	public int addUserToGroup(int userId, int groupId)
 	{
 		String sql = "INSERT INTO groups_users (user_id, group_id) VALUES(?,?)";
-		String[] columnNames = { "id" };
-		PreparedStatement statement = this.preparedStatement(sql, columnNames);
+		PreparedStatement statement = this.preparedStatementForCreate(sql);
 		try
 		{
 			statement.setInt(1, userId);

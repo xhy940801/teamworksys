@@ -20,8 +20,7 @@ public class UserDAOJDBCImpl extends JDBCBaseDAO implements UserDAO
 	public int save(User user)
 	{
 		String sql = "INSERT INTO users (email, password) values(?,?)";
-		String[] columnNames = { "id" };
-		PreparedStatement statement = this.preparedStatement(sql, columnNames);
+		PreparedStatement statement = this.preparedStatementForCreate(sql);
 		try
 		{
 			statement.setString(1, user.getEmail());
@@ -29,7 +28,7 @@ public class UserDAOJDBCImpl extends JDBCBaseDAO implements UserDAO
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}

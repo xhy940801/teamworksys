@@ -27,6 +27,15 @@ public class GroupServiceDefaultImpl extends WebServiceDefaultImpl implements
 	private UserDAO userDAO;
 	private UserDetailDAO userDetailDAO;
 
+	public GroupServiceDefaultImpl(GroupDAO groupDAO, ProjectDAO projectDAO,
+			UserDAO userDAO, UserDetailDAO userDetailDAO)
+	{
+		this.groupDAO = groupDAO;
+		this.projectDAO = projectDAO;
+		this.userDAO = userDAO;
+		this.userDetailDAO = userDetailDAO;
+	}
+
 	@Override
 	public int createGroup(int projectId, String name, String remark)
 	{
@@ -49,9 +58,9 @@ public class GroupServiceDefaultImpl extends WebServiceDefaultImpl implements
 		try
 		{
 			Group group = groupDAO.getGroupById(groupId);
-			if(group == null)
+			if (group == null)
 				throw new OperatorException("组不存在");
-			if(group.getEditable() == Editable.FALSE)
+			if (group.getEditable() == Editable.FALSE)
 				throw new OperatorException("组不可修改");
 			group.setName(name);
 			group.setRemark(remark);
@@ -77,9 +86,9 @@ public class GroupServiceDefaultImpl extends WebServiceDefaultImpl implements
 		try
 		{
 			Group group = groupDAO.getGroupById(groupId);
-			if(group == null)
+			if (group == null)
 				throw new OperatorException("组不存在");
-			if(group.getEditable() == Editable.FALSE)
+			if (group.getEditable() == Editable.FALSE)
 				throw new OperatorException("组不可修改");
 			groupDAO.delete(group.getId());
 			return 0;
@@ -103,15 +112,16 @@ public class GroupServiceDefaultImpl extends WebServiceDefaultImpl implements
 		try
 		{
 			Group group = groupDAO.getGroupById(groupId);
-			if(group == null)
+			if (group == null)
 				throw new OperatorException("组不存在");
 			Project project = projectDAO.getProjectById(group.getProjectId());
-			if(project == null)
+			if (project == null)
 				throw new OperatorException("未知错误");
-			if(userId == project.getOwner())
+			if (userId == project.getOwner())
 				throw new OperatorException("创建者不能改变组别");
-			Group oldGroup = groupDAO.getGroupByUserIdAndProjectId(userId, project.getId());
-			if(oldGroup != null)
+			Group oldGroup = groupDAO.getGroupByUserIdAndProjectId(userId,
+					project.getId());
+			if (oldGroup != null)
 				groupDAO.deleteUserFromGroup(userId, oldGroup.getId());
 			groupDAO.addUserToGroup(userId, groupId);
 			return groupId;
@@ -136,12 +146,14 @@ public class GroupServiceDefaultImpl extends WebServiceDefaultImpl implements
 		{
 			List<UserInfo> userInfos = new ArrayList<UserInfo>();
 			Group group = groupDAO.getGroupById(groupId);
-			if(group == null)
+			if (group == null)
 				throw new OperatorException("组不存在");
-			List<User> users = userDAO.getContributorByGroupId(groupId, EnumSet.of(ContributorStatus.ACCEPT));
-			for(User user : users)
+			List<User> users = userDAO.getContributorByGroupId(groupId,
+					EnumSet.of(ContributorStatus.ACCEPT));
+			for (User user : users)
 			{
-				UserDetail userDetail = userDetailDAO.getUserDetailByUserId(user.getId());
+				UserDetail userDetail = userDetailDAO
+						.getUserDetailByUserId(user.getId());
 				userInfos.add(new UserInfo(user, userDetail));
 			}
 			return userInfos;

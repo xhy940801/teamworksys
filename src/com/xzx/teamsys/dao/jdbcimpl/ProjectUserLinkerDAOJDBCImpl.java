@@ -21,8 +21,7 @@ public class ProjectUserLinkerDAOJDBCImpl extends JDBCBaseDAO implements
 	public int save(ProjectUserLinker projectUserLinker)
 	{
 		String sql = "INSERT INTO projects_users (user_id, project_id, status) VALUES(?,?,?)";
-		String[] columnNames = { "id" };
-		PreparedStatement statement = this.preparedStatement(sql, columnNames);
+		PreparedStatement statement = this.preparedStatementForCreate(sql);
 		try
 		{
 			statement.setInt(1, projectUserLinker.getUserId());

@@ -36,8 +36,7 @@ public class DBOperatorListener implements ServletContextListener,
 	{
 		try
 		{
-			if (StatementFactory.hasConnection())
-				StatementFactory.getConnection().close();
+			StatementFactory.closeConnection();
 		}
 		catch (SQLException e)
 		{
@@ -69,8 +68,8 @@ public class DBOperatorListener implements ServletContextListener,
 		try
 		{
 			StatementFactory.init("jdbc:mysql://localhost:3306/"
-					+ conf.getProperty("db-name") + "?" + "user=" + conf.getProperty("user")
-					+ "&password=" + conf.getProperty("password")
+					+ conf.getProperty("db-name") + "?" + "user=" + conf.getProperty("db-user")
+					+ "&password=" + conf.getProperty("db-password")
 					+ "&useUnicode=true&characterEncoding=UTF8");
 		}
 		catch (ClassNotFoundException e)

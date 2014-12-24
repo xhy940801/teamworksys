@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xzx.teamsys.util.StatementFactory;
+import com.xzx.teamsys.util.URLHelper;
 
 /**
  * Servlet implementation class TestServlet
@@ -37,16 +37,8 @@ public class TestServlet extends HttpServlet
 		response.getWriter().println(request.getRequestURI());
 		response.getWriter().println(request.getContextPath());
 		response.getWriter().println(request.getServletPath());
-		response.getWriter().println(request.getServletContext());
-		try
-		{
-			StatementFactory.init("asdf");
-		}
-		catch (ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		response.getWriter().println(URLHelper.getMethodName(request.getRequestURI(), request.getServletPath()));
+	//	request.getRequestDispatcher(URLHelper.get404PageURL()).forward(request, response);
 	}
 
 	/**

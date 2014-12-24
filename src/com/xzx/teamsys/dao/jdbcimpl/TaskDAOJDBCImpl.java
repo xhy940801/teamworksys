@@ -20,8 +20,7 @@ public class TaskDAOJDBCImpl extends JDBCBaseDAO implements TaskDAO
 	public int save(Task task)
 	{
 		String sql = "INSERT INTO tasks (user_id, project_id, name, remark, status, created, deadline, debriefing) VALUES(?,?,?,?,?,?,?,?)";
-		String[] columnNames = { "id" };
-		PreparedStatement statement = this.preparedStatement(sql, columnNames);
+		PreparedStatement statement = this.preparedStatementForCreate(sql);
 		try
 		{
 			statement.setInt(1, task.getUserId());

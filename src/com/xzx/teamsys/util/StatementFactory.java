@@ -20,6 +20,16 @@ public class StatementFactory
 		return threadLocal.get() != null;
 	}
 	
+	static public void closeConnection() throws SQLException
+	{
+		if(threadLocal.get() != null)
+		{
+			threadLocal.get().close();
+			threadLocal.remove();
+		}
+		
+	}
+	
 	static public Connection getConnection() throws SQLException
 	{
 		Connection conn = threadLocal.get();

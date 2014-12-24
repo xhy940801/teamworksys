@@ -3,6 +3,7 @@ package com.xzx.teamsys.dao.jdbcimpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.xzx.teamsys.dao.DAOException;
 import com.xzx.teamsys.util.StatementFactory;
@@ -32,7 +33,7 @@ public class JDBCBaseDAO
 		return statement;
 	}
 
-	protected PreparedStatement preparedStatement(String sql, String[] columnNames)
+	protected PreparedStatement preparedStatementForCreate(String sql)
 	{
 		Connection conn;
 		PreparedStatement statement;
@@ -46,7 +47,7 @@ public class JDBCBaseDAO
 		}
 		try
 		{
-			statement = conn.prepareStatement(sql, columnNames);
+			statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		}
 		catch (SQLException e)
 		{

@@ -17,16 +17,30 @@ public class UserServiceDefaultImpl extends WebServiceDefaultImpl implements Use
 	private UserDAO userDAO;
 	private UserDetailDAO userDetailDAO;
 
+	public UserServiceDefaultImpl(UserDAO userDAO, UserDetailDAO userDetailDAO, TransactionManager transactionManager)
+	{
+		this.userDAO = userDAO;
+		this.userDetailDAO = userDetailDAO;
+		this.transactionManager = transactionManager;
+	}
+	
 	@Override
-	public int register(String email, String password)
+	public int register(String email, String password, String nickname, Sex sex)
 	{
 		if(email.length() > 32)
 		{
 			lastError = "EMAIL长度过长，长度必须小于32位";
 			return -1;
 		}
+		if(userDAO.getUserByEmail(email) != null)
+		{
+			lastError = "用户名已存在";
+			return -1;
+		}
 		User user = new User(email, MD5Util.md5(password));
 		UserDetail userDetail = new UserDetail();
+		userDetail.setNickname(nickname);
+		userDetail.setSex(sex);
 		try
 		{
 			transactionManager.startTrans();
@@ -78,13 +92,13 @@ public class UserServiceDefaultImpl extends WebServiceDefaultImpl implements Use
 		try
 		{
 			User user = userDAO.getUserByEmail(email);
-			if(user == null || user.getPassword() != MD5Util.md5(password))
+			if(user == null || !user.getPassword().equals(MD5Util.md5(password)))
 			{
 				lastError = "用户名或密码错误";
 				return -1;
 			}
 			else
-				return 1;
+				return user.getId();
 		}
 		catch (DAOException e)
 		{
@@ -139,16 +153,5 @@ public class UserServiceDefaultImpl extends WebServiceDefaultImpl implements Use
 			return null;
 		}
 	}
-
-	public void setUserDAO(UserDAO userDAO)
-	{
-		this.userDAO = userDAO;
-	}
-
-	public void setUserDetailDAO(UserDetailDAO userDetailDAO)
-	{
-		this.userDetailDAO = userDetailDAO;
-	}
-	
 
 }
