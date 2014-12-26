@@ -77,10 +77,19 @@ public class UserServlet extends HttpServlet
 			result = this.showG(request, response);
 			result = result == null ? null : URLHelper.getViewPath(request.getServletPath(), result);
 			break;
+		case "accept":
+			result = this.acceptG(request, response);
+			result = result == null ? null : URLHelper.getViewPath(request.getServletPath(), result);
+			break;
+		case "refuse":
+			result = this.refuseG(request, response);
+			result = result == null ? null : URLHelper.getViewPath(request.getServletPath(), result);
+			break;
 		default:
 			result = URLHelper.get404PageURL();
 		}
-		request.getRequestDispatcher(result).forward(request, response);
+		if (result != null)
+			request.getRequestDispatcher(result).forward(request, response);
 	}
 
 	/**
@@ -107,6 +116,24 @@ public class UserServlet extends HttpServlet
 		}
 		if (result != null)
 			request.getRequestDispatcher(result).forward(request, response);
+	}
+	
+	private String acceptG(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int userId = (Integer) request.getSession().getAttribute("userId");
+		int linkId = Integer.parseInt(request.getParameter("linkId"));
+		projectService.accept(linkId, userId);
+		response.sendRedirect(URLHelper.url("User/show"));
+		return null;
+	}
+	
+	private String refuseG(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int userId = (Integer) request.getSession().getAttribute("userId");
+		int linkId = Integer.parseInt(request.getParameter("linkId"));
+		projectService.refuse(linkId, userId);
+		response.sendRedirect(URLHelper.url("User/show"));
+		return null;
 	}
 	
 	private String indexG(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -143,6 +170,10 @@ public class UserServlet extends HttpServlet
 		List<UserProjectInfo> infos = projectService.getUserProjectInfos(userId, ContributorStatus.ACCEPT);
 		if(infos == null)
 			request.setAttribute("error", projectService.getLastError());
+		List<UserProjectInfo> defaultInfos = projectService.getUserProjectInfos(userId, ContributorStatus.DEFAULT);
+		if(defaultInfos == null)
+			request.setAttribute("error", projectService.getLastError());
+		request.setAttribute("defaultInfos", defaultInfos);
 		request.setAttribute("infos", infos);
 		return "show.jsp";
 	}

@@ -14,6 +14,7 @@
 <%=URLHelper.css("users/show")%>
 <%
 	List<UserProjectInfo> infos = (List<UserProjectInfo>) request.getAttribute("infos");
+	List<UserProjectInfo> defaultInfos = (List<UserProjectInfo>) request.getAttribute("defaultInfos");
 	if(infos == null)
 		infos = new ArrayList<UserProjectInfo>();
 	int userId = (Integer) request.getAttribute("userId");
@@ -32,7 +33,6 @@
 		<% } %>
 	</div>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
 				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -45,7 +45,10 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">首页</a></li>
+				<li><%=URLHelper.link("User/index", "首页")%></li>
+				<% if(request.getAttribute("nickname") != null) { %>
+				<li class="active"><%=URLHelper.link("User/show", "个人主页")%></li>
+				<% } %>
 			</ul>
 			<% if(request.getAttribute("nickname") == null) { %>
 			<form class="navbar-form navbar-right" role="form"  method="post" action="<%=URLHelper.url("User", "signin")%>">
@@ -63,37 +66,60 @@
 			<p class="navbar-text navbar-right">欢迎你 <%=request.getAttribute("nickname")%></p>
 			<% } %>
 		</div>
-	</div>
 	</nav>
 	<div class="container">
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="own">
-				<ul>
-					<% for(UserProjectInfo info : infos) { if(info.getOwner() == userId) { %>
-					<li><%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>(<%=info.getGroupName()%>)</li>
-					<% } }%>
-				</ul>
-			</div>
-			<div role="tabpanel" class="tab-pane active" id="contr">
-				<ul>
-					<% for(UserProjectInfo info : infos) { if(info.getOwner() != userId) { %>
-					<li><%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>(<%=info.getGroupName()%>)</li>
-					<% } }%>
-				</ul>
-			</div>
-		</div>
 		<div id="show-projects">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-1">
-					<ul class="panel panel-info" role="tablist">
-						<li role="presentation" class="active"><a href="#own" role="tab" data-toggle="tab">拥有的项目</a></li>
-						<li role="presentation" ><a href="#contr" role="tab" data-toggle="tab">参与的项目</a></li>
-					</ul>
+					<div class="panel panel-info" role="tablist">
+						<div class="panel-heading">拥有的项目</div>
+						<div class="panel-body">
+							<ul>
+								<% for(UserProjectInfo info : infos) { if(info.getOwner() == userId) { %>
+								<li><%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>(<%=info.getGroupName()%>)</li>
+								<% } }%>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-8 col-md-offset-1">
-					<%=URLHelper.link("Project/create", "新疆项目", "class=\"text-right\"") %>
+					<div class="panel panel-info" role="tablist">
+						<div class="panel-heading">参与的项目</div>
+						<div class="panel-body">
+							<ul>
+								<% for(UserProjectInfo info : infos) { if(info.getOwner() != userId) { %>
+								<li><%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>(<%=info.getGroupName()%>)</li>
+								<% } }%>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-1">
+					<div class="panel panel-info" role="tablist">
+						<div class="panel-heading">待处理的邀请</div>
+						<div class="panel-body">
+							<ul>
+								<% for(UserProjectInfo info : defaultInfos) { %>
+								<li>
+									<%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>
+									<div class="pull-right">
+										<%=URLHelper.link("User/accept?linkId=" + info.getLinkId(), "接受") %>
+										<%=URLHelper.link("User/refuse?linkId=" + info.getLinkId(), "拒绝") %>
+									</div>
+								</li>
+								<% } %>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-1">
+					<p class="text-right"><%=URLHelper.link("Project/create", "新疆项目")%></p>
 				</div>
 			</div>
 		</div>

@@ -6,9 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Teamwork system</title>
+<title>Invite user</title>
 <%=URLHelper.css("bootstrap.min")%>
 <%=URLHelper.css("teamworksys")%>
+<%
+	int index = 0;
+	String error = (String) request.getAttribute("error");
+	error = error == null ? "" : error;
+%>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -24,7 +29,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">首页</a></li>
+				<li><%=URLHelper.link("User/index", "首页")%></li>
 				<% if(request.getAttribute("nickname") != null) { %>
 				<li><%=URLHelper.link("User/show", "个人主页")%></li>
 				<% } %>
@@ -46,64 +51,40 @@
 			<% } %>
 		</div>
 	</nav>
-
-	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="jumbotron">
-		<div class="container">
-			<h1>团队项目合作管理系统</h1>
-			<p>
-				这是一个团队项目合作管理系统，可以方便大家在团队项目中更方便的合作
-			</p>
-			<p>
-				<%=URLHelper.link("User/index", "查看详情", "class=\"btn btn-primary btn-lg\" role=\"button\"") %>
-			</p>
+	<div class="container container-main">
+		<div id="error-msg" class="row" data-error="<%=error%>">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<strong>Warning!</strong> <span></span>
+			</div>
 		</div>
-	</div>
-
-	<div class="container">
-		<!-- Example row of columns -->
 		<div class="row">
-			<div class="col-md-4">
-				<h2>高效</h2>
-				<p>
-					本系统秉承高效便捷的原则。
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>高效</h2>
-				<p>
-					本系统秉承高效便捷的原则。
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>高效</h2>
-				<p>
-					本系统秉承高效便捷的原则。
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
+			<div class="col-md-6 col-md-offset-3">
+				<div id="signupblock" data-error-index="<%=index%>">
+					<form class="form-horizontal" role="form" method="post">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-2 control-label">用户名</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputName"
+									name="email" placeholder="Project name" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary">邀请</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-
-		<hr>
-
-		<footer>
-		<p>&copy; Copyright xzx</p>
-		</footer>
 	</div>
 	<%=URLHelper.script("jquery-1.11.2.min")%>
 	<%=URLHelper.script("bootstrap.min")%>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<%=URLHelper.script("ie10-viewport-bug-workaround")%>
+	<%=URLHelper.script("showError")%>
 </body>
 </html>

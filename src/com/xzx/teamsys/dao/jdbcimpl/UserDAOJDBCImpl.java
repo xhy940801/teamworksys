@@ -119,7 +119,7 @@ public class UserDAOJDBCImpl extends JDBCBaseDAO implements UserDAO
 	public List<User> getContributorByProjectId(int projectId,
 			EnumSet<ContributorStatus> statuses)
 	{
-		String sql = "SELECT users.id users.email, users.password FROM projects_users LEFT JOIN users ON projects_users.user_id = users.id WHERE projects_users.project_id=? AND status IN (?,?,?)";
+		String sql = "SELECT users.id, users.email, users.password FROM projects_users LEFT JOIN users ON projects_users.user_id = users.id WHERE projects_users.project_id=? AND status IN (?,?,?)";
 		PreparedStatement statement = this.preparedStatement(sql);
 		try
 		{

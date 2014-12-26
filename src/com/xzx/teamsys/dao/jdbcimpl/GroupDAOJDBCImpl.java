@@ -28,7 +28,7 @@ public class GroupDAOJDBCImpl extends JDBCBaseDAO implements GroupDAO
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}
@@ -86,7 +86,7 @@ public class GroupDAOJDBCImpl extends JDBCBaseDAO implements GroupDAO
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}
@@ -144,7 +144,7 @@ public class GroupDAOJDBCImpl extends JDBCBaseDAO implements GroupDAO
 	@Override
 	public Group getGroupByUserIdAndProjectId(int userId, int projectId)
 	{
-		String sql = "SELECT id, project_id, name, remark, editable FROM groups where user_id=? AND project_id=?";
+		String sql = "SELECT groups.id, groups.project_id, groups.name, groups.remark, groups.editable FROM groups RIGHT JOIN groups_users ON groups.id = groups_users.group_id where user_id=? AND project_id=?";
 		PreparedStatement statement = this.preparedStatement(sql);
 		try
 		{

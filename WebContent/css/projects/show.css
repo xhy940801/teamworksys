@@ -1,0 +1,31 @@
+.left-page
+{
+
+}
+
+.right-page
+{
+
+}
+
+.task-deadline
+{
+	float: right;
+	padding-right: 10px;
+}
+
+.task-finish
+{
+	float: right;
+}
+
+.task-body
+{
+	display: none;
+	padding-top: 10px;
+}
+
+.panel-heading .badge
+{
+	float: right;
+}

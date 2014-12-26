@@ -22,7 +22,7 @@ public class StatementFactory
 	
 	static public void closeConnection() throws SQLException
 	{
-		if(threadLocal.get() != null)
+		if(threadLocal.get() != null) 
 		{
 			threadLocal.get().close();
 			threadLocal.remove();

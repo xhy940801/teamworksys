@@ -58,8 +58,8 @@ public class ServiceInitializeListener implements ServletContextListener
 		UserDetailDAO userDetailDAO = new UserDetailDAOJDBCImpl();
 		
 		GroupService groupService = new GroupServiceDefaultImpl(groupDAO, projectDAO, userDAO, userDetailDAO);
-		ProjectService projectService = new ProjectServiceDefaultImpl(projectDAO, groupDAO, projectUserLinkerDAO, transactionManager);
-		TaskService taskService = new TaskServiceDefaultImpl(taskDAO);
+		ProjectService projectService = new ProjectServiceDefaultImpl(projectDAO, groupDAO, userDAO, userDetailDAO, projectUserLinkerDAO, transactionManager);
+		TaskService taskService = new TaskServiceDefaultImpl(taskDAO, transactionManager);
 		UserService userService = new UserServiceDefaultImpl(userDAO, userDetailDAO, transactionManager);
 		
 		sce.getServletContext().setAttribute("groupService", groupService);

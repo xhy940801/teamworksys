@@ -34,7 +34,7 @@ public class TaskDAOJDBCImpl extends JDBCBaseDAO implements TaskDAO
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}
@@ -71,7 +71,7 @@ public class TaskDAOJDBCImpl extends JDBCBaseDAO implements TaskDAO
 	@Override
 	public Task getTaskById(int taskId)
 	{
-		String sql = "SELECT user_id, project_id, name, remark, status, created, deadline, debriefing FROM tasks WHERE id=?";
+		String sql = "SELECT id, user_id, project_id, name, remark, status, created, deadline, debriefing FROM tasks WHERE id=?";
 		PreparedStatement statement = this.preparedStatement(sql);
 		try
 		{
@@ -198,7 +198,7 @@ public class TaskDAOJDBCImpl extends JDBCBaseDAO implements TaskDAO
 	public List<Task> getTasksByUserIdAndProjectId(int userId, int projectId,
 			EnumSet<CompletionStatus> statuses)
 	{
-		String sql = "SELECT user_id, project_id, name, remark, status, created, deadline, debriefing FROM tasks WHERE user_id=? AND project_id=? status IN (?,?)";
+		String sql = "SELECT id, user_id, project_id, name, remark, status, created, deadline, debriefing FROM tasks WHERE user_id=? AND project_id=? AND status IN (?,?)";
 		PreparedStatement statement = this.preparedStatement(sql);
 		List<Task> tasks = new ArrayList<Task>();
 		try

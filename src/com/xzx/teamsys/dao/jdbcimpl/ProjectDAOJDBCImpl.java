@@ -27,7 +27,7 @@ public class ProjectDAOJDBCImpl extends JDBCBaseDAO implements ProjectDAO
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}
@@ -76,7 +76,7 @@ public class ProjectDAOJDBCImpl extends JDBCBaseDAO implements ProjectDAO
 	@Override
 	public Project getProjectById(int id)
 	{
-		String sql = "SELECT id, name=, owner, remark, default_group_id WHERE user_id=?";
+		String sql = "SELECT id, name, owner, remark, default_group_id FROM projects WHERE id=?";
 		PreparedStatement statement = this.preparedStatement(sql);
 		try
 		{

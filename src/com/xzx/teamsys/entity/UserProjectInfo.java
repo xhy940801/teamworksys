@@ -2,6 +2,7 @@ package com.xzx.teamsys.entity;
 
 import com.xzx.teamsys.bean.Group;
 import com.xzx.teamsys.bean.Project;
+import com.xzx.teamsys.bean.ProjectUserLinker;
 import com.xzx.teamsys.bean.User;
 
 public class UserProjectInfo
@@ -15,20 +16,22 @@ public class UserProjectInfo
 	private int groupId;
 	private String groupName;
 	private String groupRemark;
-	
+	private int linkId;
+
 	public UserProjectInfo()
 	{
 		
 	}
 	
-	public UserProjectInfo(int userId, Project project, Group group, ContributorStatus status)
+	public UserProjectInfo(int userId, Project project, Group group, ProjectUserLinker linker)
 	{
 		this.projectId = project.getId();
 		this.owner = project.getOwner();
 		this.projectName = project.getName();
 		this.projectRemark = project.getRemark();
 		this.userId = userId;
-		this.status = status;
+		this.status = linker.getStatus();
+		this.linkId = linker.getId();
 		if(group != null)
 		{
 			this.groupId = group.getId();
@@ -37,9 +40,9 @@ public class UserProjectInfo
 		}
 	}
 	
-	public UserProjectInfo(User user, Project project, Group group, ContributorStatus status)
+	public UserProjectInfo(User user, Project project, Group group, ProjectUserLinker linker)
 	{
-		this(user.getId(), project, group, status);
+		this(user.getId(), project, group, linker);
 	}
 
 	public int getProjectId()
@@ -130,5 +133,15 @@ public class UserProjectInfo
 	public void setGroupRemark(String groupRemark)
 	{
 		this.groupRemark = groupRemark;
+	}
+	
+	public int getLinkId()
+	{
+		return linkId;
+	}
+
+	public void setLinkId(int linkId)
+	{
+		this.linkId = linkId;
 	}
 }

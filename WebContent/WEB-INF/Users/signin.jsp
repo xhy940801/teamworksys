@@ -37,8 +37,7 @@
 				</label>
 			</div>
 			-->
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-				in</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
 		<div id="signup"><%=URLHelper.link("User/signup", "Sign up")%></div>
 	</div>

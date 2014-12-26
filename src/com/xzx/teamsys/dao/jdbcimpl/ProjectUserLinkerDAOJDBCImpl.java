@@ -30,7 +30,7 @@ public class ProjectUserLinkerDAOJDBCImpl extends JDBCBaseDAO implements
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next())
-				return rs.getInt("id");
+				return rs.getInt(1);
 			else
 				throw new DAOException("unknow error");
 		}
