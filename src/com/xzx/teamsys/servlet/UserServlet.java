@@ -210,6 +210,7 @@ public class UserServlet extends HttpServlet
 			return "signup.jsp";
 		}
 		request.getSession().setAttribute("userId", userId);
+		request.getSession().setAttribute("nickname", nickname);
 		response.sendRedirect(URLHelper.url("User/show"));
 		return null;
 	}
