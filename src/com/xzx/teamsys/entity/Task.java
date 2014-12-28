@@ -1,5 +1,7 @@
 package com.xzx.teamsys.entity;
 
+import java.text.SimpleDateFormat;
+
 import com.xzx.teamsys.entity.CompletionStatus;
 
 public class Task
@@ -105,6 +107,12 @@ public class Task
 	public java.util.Date getDeadline()
 	{
 		return deadline;
+	}
+	
+	public String getSDeadline()
+	{
+		SimpleDateFormat dateformat=new SimpleDateFormat("yyyy年MM月dd日");
+		return dateformat.format(deadline);
 	}
 	
 	public void setDeadline(java.util.Date deadline)

@@ -105,7 +105,7 @@
 							<ul>
 								<% for(UserProjectInfo info : defaultInfos) { %>
 								<li>
-									<%=URLHelper.link("Project/show?id=" + info.getProjectId(), info.getProjectName())%>
+									<%=info.getProjectName()%>
 									<div class="pull-right">
 										<%=URLHelper.link("User/accept?linkId=" + info.getLinkId(), "接受") %>
 										<%=URLHelper.link("User/refuse?linkId=" + info.getLinkId(), "拒绝") %>
@@ -119,7 +119,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-8 col-md-offset-1">
-					<p class="text-right"><%=URLHelper.link("Project/create", "新疆项目")%></p>
+					<p class="text-right"><%=URLHelper.link("Project/create", "新建项目")%></p>
 				</div>
 			</div>
 		</div>

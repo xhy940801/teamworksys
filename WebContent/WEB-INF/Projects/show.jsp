@@ -111,7 +111,7 @@
 											<span class="task-name"><%=task.getName()%></span>
 										</a>
 										<%=URLHelper.link("Project/finishTask?taskId=" + task.getId() + "&projectId=" + projectId, "<span class=\"task-finish glyphicon glyphicon-ok\"></span>") %>
-										<span class="task-deadline text-right"><%=task.getDeadline()%></span>
+										<span class="task-deadline text-right"><%=task.getSDeadline()%></span>
 									</div>
 									<div class="task-body"><p class="task-remark text-muted"><%=task.getRemark()%></p></div>
 								</div>
@@ -131,7 +131,7 @@
 											<span class="task-name"><%=task.getName()%></span>
 										</a>
 										<%=URLHelper.link("Project/finishTask?taskId=" + task.getId() + "&projectId=" + projectId, "<span class=\"task-finish glyphicon glyphicon-ok\"></span>") %>
-										<span class="task-deadline text-right"><%=task.getDeadline()%></span>
+										<span class="task-deadline text-right"><%=task.getSDeadline()%></span>
 									</div>
 									<div class="task-body"><p class="task-remark text-muted"><%=task.getRemark()%></p></div>
 								</div>
@@ -147,7 +147,7 @@
 								<div class = "list-group-item">
 									<a class="task-head" href="#">
 										<span class="task-name"><%=task.getName()%></span>
-										<span class="task-deadline"><%=task.getDeadline()%></span>
+										<span class="task-deadline"><%=task.getSDeadline()%></span>
 									</a>
 									<div class="task-body"><p class="task-remark text-muted"><%=task.getRemark()%></p></div>
 								</div>

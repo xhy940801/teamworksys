@@ -178,7 +178,7 @@ public class ProjectServlet extends HttpServlet
 		
 		try
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YY");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date deadline = sdf.parse(deadlineS);
 			Calendar calendar = new GregorianCalendar();
 			calendar.setTime(deadline);
